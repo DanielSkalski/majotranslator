@@ -18,20 +18,20 @@ protected:
 
 public:
     Translator();
-    Translator( QString normalText );
+    Translator( const QString& normalText );
     virtual ~Translator(){
         delete CodeToNormalMap;
         delete NormalToCodeMap;
     }
 
-    virtual QString CodeToNormal( QString );
-    virtual QString GetCodedLetter( int &pos, QString str ) = 0;
-    virtual QString CodeLetterToNormalLetter( QString );
+    virtual QString CodeToNormal( const QString& );
+    virtual QString GetCodedLetter( int &pos, const QString& str ) = 0;
+    virtual QString CodeLetterToNormalLetter( const QString& );
 
-    virtual QString NormalToCode( QString );
-    virtual QString NormalLetterToCodeLetter( QString );
+    virtual QString NormalToCode( const QString& );
+    virtual QString NormalLetterToCodeLetter( const QString& );
 
-    void setText( QString );
+    void setText( const QString& );
 };
 
 #endif // TRANSLATOR_H

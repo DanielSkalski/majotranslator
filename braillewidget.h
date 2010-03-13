@@ -11,9 +11,9 @@ class BrailleWidget : public Translator
 
 public:
     BrailleWidget();
-    BrailleWidget( QString normalText );
+    BrailleWidget( const QString& normalText );
 
-    QString GetCodedLetter( int &pos, QString str );
+    QString GetCodedLetter( int &pos, const QString& str );
 
 };
 

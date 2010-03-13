@@ -11,9 +11,12 @@ class MorseWidget : public Translator
 
 public:
     MorseWidget();
-    MorseWidget( QString normalText );
+    MorseWidget( const QString& normalText );
 
-    QString GetCodedLetter( int &pos, QString str );
+    QString NormalToCode( const QString& str );
+
+    QString GetCodedLetter( int &pos, const QString& str );
+    QString ConvertToDotsSticks( const QString& str );
 
 };
 

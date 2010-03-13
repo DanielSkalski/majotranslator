@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QPushButton>
+#include <QCheckBox>
 #include "braillewidget.h"
 #include "morsewidget.h"
 
@@ -18,11 +19,13 @@ public:
     QTextEdit * morseCode;
     QTextEdit * normalText;
     QPushButton * translate;
+    QCheckBox * morseMode;
 
     MainWidget(QWidget * parent = 0);
 
 public slots:
-    void updateText( QString str );
+    void updateText( const QString& str );
+    void changeMorseRep();
     void updateText();
 };
 
