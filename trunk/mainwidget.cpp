@@ -15,6 +15,8 @@ MainWidget::MainWidget( QWidget * parent) : QWidget(parent)
     morseCode->setReadOnly( true );
     normalText = new QTextEdit();
 
+    morseMode = new QCheckBox( "Klasyczny Morse" );
+/*
     QHBoxLayout * codes = new QHBoxLayout();
     codes->addWidget( brailleCode );
     codes->addWidget( morseCode );
@@ -22,25 +24,32 @@ MainWidget::MainWidget( QWidget * parent) : QWidget(parent)
     QVBoxLayout * layout = new QVBoxLayout();
     layout->addLayout( codes );
     layout->addWidget( normalText );
-
-/*
-    QGridLayout* layout = new QGridLayout( this );
-    layout->addWidget( brailleCode, 0, 0 );
-    layout->addWidget( morseCode, 0, 1 );
-    layout->addWidget( normalText, 1, 0, 2, 2, Qt::AlignJustify );
 */
 
+    QVBoxLayout * buttons = new QVBoxLayout();
+    buttons->addWidget( morseMode );
+
+    QGridLayout* layout = new QGridLayout();
+    layout->addWidget( brailleCode, 0, 0 );
+    layout->addWidget( morseCode, 0, 1 );
+    layout->addWidget( normalText, 1, 0 );
+    layout->addLayout( buttons, 1, 1 );
+
+
     connect( normalText, SIGNAL(textChanged()), this, SLOT(updateText()) );
+    connect( morseMode, SIGNAL(clicked()), this, SLOT(changeMorseRep()) );
 
     this->setLayout( layout );
 }
 
 //------------------ S L O T S ------------------------------------//
 
-void MainWidget::updateText( QString normal )
+void MainWidget::updateText( const QString& normal )
 {
     QString braille = this->brailleWidget->NormalToCode( normal );
     QString morse = this->morseWidget->NormalToCode( normal );
+    if( morseMode->isChecked() )
+        morse = this->morseWidget->ConvertToDotsSticks( morse );
     this->brailleCode->setText( braille );
     this->morseCode->setText( morse );
 }
@@ -49,4 +58,12 @@ void MainWidget::updateText()
 {
     QString normal = this->normalText->toPlainText();
     updateText( normal );
+}
+
+void MainWidget::changeMorseRep(){
+    QString str = this->normalText->toPlainText();
+    str = this->morseWidget->NormalToCode( str );
+    if( morseMode->isChecked() )
+        str = this->morseWidget->ConvertToDotsSticks( str );
+    this->morseCode->setText( str );
 }
